@@ -26,4 +26,5 @@
     <plugin name="cordova-plugin-camera" spec="~2.3.0" />
     <plugin name="cordova-plugin-file" spec="~4.3.0" />
     <plugin name="cordova-plugin-tesseract" spec="https://github.com/gustavomazzoni/cordova-plugin-tesseract.git" />
+    <engine name="android" spec="~5.2.2" />
 </widget>
