@@ -6,20 +6,37 @@ function debug(message) {
 }
 
 var app = {
-	initialize : function() {
-		app.receivedEvent('deviceready');
-	},
-	// Update DOM on a Received Event
-	receivedEvent : function(id) {
-		var parentElement = $('#' + id);
-		var listeningElement = parentElement.find('.listening');
-		var receivedElement = parentElement.find('.received');
+		initialize : function() {
+			app.receivedEvent('deviceready');
+			$('#getImage').on("click", function() {
+				debug('button clicked');
+				navigator.camera.getPicture(function(imageURL) {
+					var text;
+					// Success callback
+					debug('Got picture: ' + imageURL);
+					navigator.camera.cleanup(function() {}, function() {});
+				},
+				function(message) {
+					// Failure callback
+					debug('Failed to get picture: ' + message);
+				}, {
+					"correctOrientation": true,
+					"saveToPhotoAlbum": false,
+					"destinationType": navigator.camera.DestinationType.DATA_URL
+				});
+			});
+		},
+		// Update DOM on a Received Event
+		receivedEvent : function(id) {
+			var parentElement = $('#' + id);
+			var listeningElement = parentElement.find('.listening');
+			var receivedElement = parentElement.find('.received');
 
-		listeningElement.css('display', 'none');
-		receivedElement.css('display', 'block');
+			listeningElement.css('display', 'none');
+			receivedElement.css('display', 'block');
 
-		debug('Received Event: ' + id);
-	}
+			debug('Received Event: ' + id);
+		}
 };
 
 $(function() {
