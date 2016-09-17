@@ -12,8 +12,18 @@ var app = {
 				debug('button clicked');
 				navigator.camera.getPicture(function(imageURL) {
 					var text;
-					// Success callback
+					// Camera success callback
 					debug('Got picture: ' + imageURL);
+					TesseractPlugin.recognizeText(
+						imageURL, 'eng',
+						function(text) {
+							// Tesseract success callback
+							debug('Recognised text: ' + text);
+						}, function(errorMessage) {
+							// Tesseract failure callback
+							debug('Tesseract failed: ' + errorMessage);
+						}
+					);
 					navigator.camera.cleanup(function() {}, function() {});
 				},
 				function(message) {
